@@ -20,9 +20,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 -Werror")
 
 add_library(drakmoor
+  src/function_expression.cpp
   )
 
 add_executable(drakmoor-test
+  src/catch.main.cpp
+  src/function_expression.test.cpp
   )
 
 target_link_libraries(drakmoor-test drakmoor)
