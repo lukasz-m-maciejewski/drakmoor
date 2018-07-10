@@ -14,15 +14,15 @@ using arg_map = std::map<std::string, base_type>;
 
 class expression;
 
-class value
+class atom
 {
 public:
-    virtual ~value() = default;
+    virtual ~atom() = default;
     virtual base_type eval_at(const arg_map&) const = 0;
-    virtual std::unique_ptr<value> clone() const = 0;
+    virtual std::unique_ptr<atom> clone() const = 0;
 };
 
-class constant : public value
+class constant : public atom
 {
 public:
     constant(base_type v_init) : v{v_init}
@@ -34,7 +34,7 @@ public:
         return v;
     }
 
-    std::unique_ptr<value> clone() const override
+    std::unique_ptr<atom> clone() const override
     {
         return std::make_unique<constant>(*this);
     }
@@ -43,7 +43,7 @@ private:
     base_type v;
 };
 
-class placeholder : public value
+class placeholder : public atom
 {
 public:
     placeholder(std::string id_init) : id{std::move(id_init)}
@@ -55,7 +55,7 @@ public:
         return point.at(id);
     }
 
-    std::unique_ptr<value> clone() const override
+    std::unique_ptr<atom> clone() const override
     {
         return std::make_unique<placeholder>(*this);
     }
@@ -66,10 +66,10 @@ private:
 
 using operation_t = std::function<base_type(base_type, base_type)>;
 
-class compound : public value
+class compound : public atom
 {
 public:
-    compound(operation_t operation_init, std::unique_ptr<value> v1, std::unique_ptr<value> v2)
+    compound(operation_t operation_init, std::unique_ptr<atom> v1, std::unique_ptr<atom> v2)
         : operation{operation_init}
     {
         values.emplace_back(v1->clone());
@@ -108,14 +108,14 @@ public:
                                operation);
     }
 
-    std::unique_ptr<value> clone() const override
+    std::unique_ptr<atom> clone() const override
     {
         return std::make_unique<compound>(*this);
     }
 
 private:
     operation_t operation;
-    std::vector<std::unique_ptr<value>> values;
+    std::vector<std::unique_ptr<atom>> values;
 };
 
 class expression
@@ -131,8 +131,8 @@ public:
     {
     }
 
-    expression(operation_t op, std::unique_ptr<value> v1, std::unique_ptr<value> v2)
-        : v{std::make_unique<compound>(op, std::move(v1), std::move(v2))}
+    expression(operation_t op, expression e1, expression e2)
+        : v{std::make_unique<compound>(op, std::move(e1.v), std::move(e2.v))}
     {
     }
 
@@ -141,17 +141,27 @@ public:
         return v->eval_at(point);
     }
 
-    std::unique_ptr<value> v;
+    std::unique_ptr<atom> v;
 };
 
 expression operator+(expression e1, expression e2)
 {
-    return expression{std::plus<base_type>{}, std::move(e1.v), std::move(e2.v)};
+    return expression(std::plus<base_type>{}, std::move(e1), std::move(e2));
+}
+
+expression operator-(expression e1, expression e2)
+{
+    return expression(std::minus<base_type>{}, std::move(e1), std::move(e2));
 }
 
 expression operator*(expression e1, expression e2)
 {
-    return expression{std::multiplies<base_type>{}, std::move(e1.v), std::move(e2.v)};
+    return expression(std::multiplies<base_type>{}, std::move(e1), std::move(e2));
+}
+
+expression operator/(expression e1, expression e2)
+{
+    return expression(std::divides<base_type>{}, std::move(e1), std::move(e2));
 }
 
 #endif // DRAKMOOR_FUNCTION_EXPRESSION
