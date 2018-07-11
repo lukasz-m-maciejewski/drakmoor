@@ -41,3 +41,8 @@ target_link_libraries(drakmoor-test drakmoor)
 add_test(NAME drakmoor-basic
   COMMAND bin/drakmoor-test
   )
+
+add_executable(x3_roman_numeral_example
+  src/x3_roman_numeral_example.cpp)
+
+add_subdirectory(src/x3-minimal-ast)
