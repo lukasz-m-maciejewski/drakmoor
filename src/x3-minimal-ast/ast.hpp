@@ -4,15 +4,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_MINIMAL_AST_HPP)
-#define BOOST_SPIRIT_X3_MINIMAL_AST_HPP
-
+#pragma once
 #include <boost/fusion/include/io.hpp>
 
 #include <iostream>
 #include <string>
 
-namespace client { namespace ast
+namespace client::ast
 {
     ///////////////////////////////////////////////////////////////////////////
     //  Our employee AST struct
@@ -26,6 +24,4 @@ namespace client { namespace ast
     };
 
     using boost::fusion::operator<<;
-}}
-
-#endif
+}

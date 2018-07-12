@@ -4,8 +4,7 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_MINIMAL_AST_ADAPTED_HPP)
-#define BOOST_SPIRIT_X3_MINIMAL_AST_ADAPTED_HPP
+#pragma once
 
 #include <boost/fusion/include/adapt_struct.hpp>
 #include "ast.hpp"
@@ -18,4 +17,3 @@ BOOST_FUSION_ADAPT_STRUCT(client::ast::employee,
     age, forename, surname, salary
 )
 
-#endif

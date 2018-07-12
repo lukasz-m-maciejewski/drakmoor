@@ -1,8 +1,16 @@
-cmake_minimum_required (VERSION 3.0.0)
-execute_process(COMMAND /usr/bin/conan install ${CMAKE_SOURCE_DIR}
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-
+cmake_minimum_required (VERSION 3.11.0)
 project(drakmoor)
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+execute_process(COMMAND /usr/bin/conan install ${CMAKE_SOURCE_DIR} --profile clang --build missing
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+execute_process(COMMAND /usr/bin/conan install ${CMAKE_SOURCE_DIR} --build missing
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+else()
+  message(FATAL_ERROR "Compiler not configured ${CMAKE_CXX_COMPILER_ID}")
+endif ()
+
 set(CONAN_SYSTEM_INCLUDES "On")
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
@@ -21,11 +29,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 -Wswitch-enum \
 -Wshadow \
 -Wnon-virtual-dtor \
--Wsuggest-override \
 -std=c++17 \
 -pedantic \
 -g \
 -Werror")
+
+#-Wsuggest-override \
 
 add_library(drakmoor
   src/function_expression.cpp
@@ -46,3 +55,4 @@ add_executable(x3_roman_numeral_example
   src/x3_roman_numeral_example.cpp)
 
 add_subdirectory(src/x3-minimal-ast)
+add_subdirectory(src/constexpr_all_the_things)
