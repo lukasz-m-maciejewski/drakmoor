@@ -1,4 +1,4 @@
-#include <catch/catch.hpp>
+#include <catch.hpp>
 #include "function_expression.hpp"
 #include <boost/spirit/home/x3.hpp>
 

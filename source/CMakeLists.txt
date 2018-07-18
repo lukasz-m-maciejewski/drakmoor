@@ -57,3 +57,4 @@ add_executable(x3_roman_numeral_example
 add_subdirectory(src/x3-minimal-ast)
 add_subdirectory(src/constexpr_all_the_things)
 add_subdirectory(src/x3-rexpr_full)
+add_subdirectory(src/monadic_composition)
