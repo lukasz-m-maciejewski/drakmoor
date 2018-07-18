@@ -164,4 +164,26 @@ expression operator/(expression e1, expression e2)
     return expression(std::divides<base_type>{}, std::move(e1), std::move(e2));
 }
 
+// template 
+// struct sum_helper(int acc)
+// {
+//     return acc;
+// };
+
+// template <int N, int... Ns>
+// int sum_helper(int acc)
+// {
+//     // if constexpr (sizeof...(Ns) > 0)
+//     return sum_helper<Ns...>(acc + N);
+//     // else
+//     //     return N;
+// };
+
+
+// template <int... Ns>
+// int sum()
+// {
+//     return sum_helper<Ns...>(0);
+// }
+
 #endif // DRAKMOOR_FUNCTION_EXPRESSION

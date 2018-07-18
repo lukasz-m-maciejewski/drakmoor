@@ -49,3 +49,12 @@ TEST_CASE("simple expression with single variable - division", "[ch01]")
 
     REQUIRE((expr.eval_at(am) - 2.0 < epsilon));
 }
+
+// TEST_CASE("constexpr summing")
+// {
+//     int x = sum<1, 2, 3, 4, 5>();
+//     REQUIRE(x == 15);
+
+//     int y = sum<2353>();
+//     REQUIRE(y == 2353);
+// }
