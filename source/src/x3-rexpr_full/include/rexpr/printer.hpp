@@ -4,14 +4,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_REPR_PRINTER_HPP)
-#define BOOST_SPIRIT_X3_REPR_PRINTER_HPP
+#pragma once
 
 #include "ast.hpp"
 
 #include <ostream>
 
-namespace rexpr { namespace ast
+namespace rexpr::ast
 {
     ///////////////////////////////////////////////////////////////////////////
     //  Print out the rexpr tree
@@ -52,6 +51,5 @@ namespace rexpr { namespace ast
         std::ostream& out;
         int indent;
     };
-}}
+}
 
-#endif
