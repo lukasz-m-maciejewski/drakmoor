@@ -54,7 +54,7 @@ namespace rexpr { namespace parser
     template <typename Iterator, typename Exception, typename Context>
     inline x3::error_handler_result
     error_handler_base::on_error(
-        Iterator& first, Iterator const& last
+        Iterator& /*first*/, Iterator const& /*last*/
       , Exception const& x, Context const& context)
     {
         std::string which = x.which();

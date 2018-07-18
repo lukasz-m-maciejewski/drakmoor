@@ -24,7 +24,7 @@ namespace rexpr
         typedef
             x3::rule<rexpr_class, ast::rexpr>
         rexpr_type;
-        BOOST_SPIRIT_DECLARE(rexpr_type);
+        BOOST_SPIRIT_DECLARE(rexpr_type)
     }
 
     parser::rexpr_type const& rexpr();

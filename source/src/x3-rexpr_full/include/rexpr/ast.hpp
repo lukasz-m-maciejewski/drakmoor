@@ -28,6 +28,10 @@ namespace rexpr { namespace ast
     {
         using base_type::base_type;
         using base_type::operator=;
+        rexpr_value(const rexpr_value&) = default;
+        rexpr_value(rexpr_value&&) = default;
+        rexpr_value& operator=(const rexpr_value&) = default;
+        rexpr_value& operator=(rexpr_value&&) = default;
     };
 
     typedef std::map<std::string, rexpr_value> rexpr_map;

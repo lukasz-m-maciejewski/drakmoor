@@ -67,7 +67,7 @@ namespace rexpr { namespace parser
 
     auto const rexpr_def = rexpr_inner_def;
 
-    BOOST_SPIRIT_DEFINE(rexpr_value, rexpr, rexpr_inner, rexpr_key_value);
+    BOOST_SPIRIT_DEFINE(rexpr_value, rexpr, rexpr_inner, rexpr_key_value)
 
     ///////////////////////////////////////////////////////////////////////////
     // Annotation and Error handling
