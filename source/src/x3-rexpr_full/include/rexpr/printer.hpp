@@ -21,8 +21,8 @@ namespace rexpr::ast
     {
         typedef void result_type;
 
-        rexpr_printer(std::ostream& out, int indent = 0)
-          : out(out), indent(indent) {}
+        rexpr_printer(std::ostream& p_out, int p_indent = 0)
+          : out(p_out), indent(p_indent) {}
 
         void operator()(rexpr const& ast) const
         {
@@ -52,4 +52,3 @@ namespace rexpr::ast
         int indent;
     };
 }
-

@@ -7,8 +7,7 @@
 #include "rexpr/rexpr_def.hpp"
 #include "rexpr/config.hpp"
 
-namespace rexpr { namespace parser
+namespace rexpr::parser
 {
-    BOOST_SPIRIT_INSTANTIATE(
-        rexpr_type, iterator_type, context_type)
-}}
+    BOOST_SPIRIT_INSTANTIATE(rexpr_type, iterator_type, context_type)
+}

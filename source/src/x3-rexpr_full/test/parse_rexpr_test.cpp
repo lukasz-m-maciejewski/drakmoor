@@ -9,11 +9,11 @@
 #include <algorithm>
 #include <sstream>
 
-#include "../rexpr/ast.hpp"
-#include "../rexpr/rexpr.hpp"
-#include "../rexpr/error_handler.hpp"
-#include "../rexpr/config.hpp"
-#include "../rexpr/printer.hpp"
+#include "rexpr/ast.hpp"
+#include "rexpr/rexpr.hpp"
+#include "rexpr/error_handler.hpp"
+#include "rexpr/config.hpp"
+#include "rexpr/printer.hpp"
 
 #include <boost/spirit/home/x3/support/utility/testing.hpp>
 
