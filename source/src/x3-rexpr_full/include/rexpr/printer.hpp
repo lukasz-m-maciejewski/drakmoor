@@ -12,43 +12,44 @@
 
 namespace rexpr::ast
 {
-    ///////////////////////////////////////////////////////////////////////////
-    //  Print out the rexpr tree
-    ///////////////////////////////////////////////////////////////////////////
-    int const tabsize = 4;
+///////////////////////////////////////////////////////////////////////////
+//  Print out the rexpr tree
+///////////////////////////////////////////////////////////////////////////
+int const tabsize = 4;
 
-    struct rexpr_printer
+struct rexpr_printer
+{
+    typedef void result_type;
+
+    rexpr_printer(std::ostream& p_out, int p_indent = 0) : out(p_out), indent(p_indent)
     {
-        typedef void result_type;
+    }
 
-        rexpr_printer(std::ostream& p_out, int p_indent = 0)
-          : out(p_out), indent(p_indent) {}
-
-        void operator()(rexpr const& ast) const
+    void operator()(rexpr const& ast) const
+    {
+        out << '{' << std::endl;
+        for (auto const& entry : ast.entries)
         {
-            out << '{' << std::endl;
-            for (auto const& entry : ast.entries)
-            {
-                tab(indent+tabsize);
-                out << '"' << entry.first << "\" = ";
-                boost::apply_visitor(rexpr_printer(out, indent+tabsize), entry.second);
-            }
-            tab(indent);
-            out << '}' << std::endl;
+            tab(indent + tabsize);
+            out << '"' << entry.first << "\" = ";
+            boost::apply_visitor(rexpr_printer(out, indent + tabsize), entry.second);
         }
+        tab(indent);
+        out << '}' << std::endl;
+    }
 
-        void operator()(std::string const& text) const
-        {
-            out << '"' << text << '"' << std::endl;
-        }
+    void operator()(std::string const& text) const
+    {
+        out << '"' << text << '"' << std::endl;
+    }
 
-        void tab(int spaces) const
-        {
-            for (int i = 0; i < spaces; ++i)
-                out << ' ';
-        }
+    void tab(int spaces) const
+    {
+        for (int i = 0; i < spaces; ++i)
+            out << ' ';
+    }
 
-        std::ostream& out;
-        int indent;
-    };
-}
+    std::ostream& out;
+    int indent;
+};
+} // namespace rexpr::ast

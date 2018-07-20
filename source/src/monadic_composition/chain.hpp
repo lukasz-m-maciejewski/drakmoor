@@ -29,3 +29,14 @@ auto operator>=(std::optional<T1> m, F f)
 
 
 }
+
+namespace testing
+{
+struct Wrap
+{
+    explicit Wrap(int value) : v(value) {}
+    int v;
+};
+
+Wrap operator>=(const Wrap& lhs, const Wrap& rhs);
+}

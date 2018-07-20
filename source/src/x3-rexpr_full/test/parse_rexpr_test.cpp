@@ -4,24 +4,24 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+#include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <algorithm>
 #include <sstream>
 
 #include "rexpr/ast.hpp"
-#include "rexpr/rexpr.hpp"
-#include "rexpr/error_handler.hpp"
 #include "rexpr/config.hpp"
+#include "rexpr/error_handler.hpp"
 #include "rexpr/printer.hpp"
+#include "rexpr/rexpr.hpp"
+#include "rexpr/rexpr_def.hpp" // needs to be included because instantiation in the lib is insuffucient
 
 #include <boost/spirit/home/x3/support/utility/testing.hpp>
 
 namespace fs = boost::filesystem;
 namespace testing = boost::spirit::x3::testing;
 
-auto parse = [](std::string const& source, fs::path input_path)-> std::string
-{
+auto parse = [](std::string const& source, fs::path input_path) -> std::string {
     std::stringstream out;
 
     using rexpr::parser::iterator_type;
@@ -35,16 +35,14 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
     using boost::spirit::x3::with;
     using rexpr::parser::error_handler_type;
     using rexpr::parser::error_handler_tag;
-    error_handler_type error_handler(iter, end, out, input_path.c_str()); // Our error handler
+    error_handler_type error_handler(iter, end, out,
+                                     input_path.c_str()); // Our error handler
 
     // Our parser
     auto const parser =
         // we pass our error handler to the parser so we can access
         // it later on in our on_error and on_sucess handlers
-        with<error_handler_tag>(std::ref(error_handler))
-        [
-            rexpr::rexpr()
-        ];
+        with<error_handler_tag>(std::ref(error_handler))[rexpr::rexpr()];
 
     // Go forth and parse!
     using boost::spirit::x3::ascii::space;
@@ -62,25 +60,29 @@ auto parse = [](std::string const& source, fs::path input_path)-> std::string
 };
 
 int num_files_tested = 0;
-auto compare = [](fs::path input_path, fs::path expect_path)
-{
-   testing::compare(input_path, expect_path, parse);
-   ++num_files_tested;
+auto compare = [](fs::path input_path, fs::path expect_path) {
+    testing::compare(input_path, expect_path, parse);
+    ++num_files_tested;
 };
 
 int main(int argc, char* argv[])
 {
     if (argc < 2)
     {
-       std::cout << "usage: " << fs::path(argv[0]).filename() << " path/to/test/files" << std::endl;
-       return -1;
+        std::cout << "usage: " << fs::path(argv[0]).filename() << " path/to/test/files"
+                  << std::endl;
+        return -1;
     }
 
-    std::cout << "===================================================================================================" << std::endl;
+    std::cout << "======================================================================="
+                 "============================"
+              << std::endl;
     std::cout << "Testing: " << fs::absolute(fs::path(argv[1])) << std::endl;
     int r = testing::for_each_file(fs::path(argv[1]), compare);
     if (r == 0)
         std::cout << num_files_tested << " files tested." << std::endl;
-    std::cout << "===================================================================================================" << std::endl;
+    std::cout << "======================================================================="
+                 "============================"
+              << std::endl;
     return r;
 }

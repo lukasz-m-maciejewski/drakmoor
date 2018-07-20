@@ -17,3 +17,10 @@ TEST_CASE("basic composition")
     REQUIRE( !!res2 );
     REQUIRE( *res2 == Approx(9.0));
 }
+
+TEST_CASE("operator>= priority")
+{
+    using namespace testing;
+    auto res = ( Wrap(1) >= Wrap(5) >= Wrap(13) >= Wrap(23) >= Wrap(47));
+    REQUIRE(res.v == 89);
+}

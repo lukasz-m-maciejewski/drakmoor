@@ -39,5 +39,4 @@ struct rexpr : x3::position_tagged
     rexpr_map entries;
 };
 
-}
-
+} // namespace rexpr::ast
