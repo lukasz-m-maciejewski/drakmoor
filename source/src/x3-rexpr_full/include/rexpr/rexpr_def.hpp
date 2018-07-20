@@ -1,11 +1,4 @@
-/*=============================================================================
-    Copyright (c) 2001-2015 Joel de Guzman
-
-    Distributed under the Boost Software License, Version 1.0. (See accompanying
-    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-=============================================================================*/
-#if !defined(BOOST_SPIRIT_X3_REPR_REXPR_DEF_HPP)
-#define BOOST_SPIRIT_X3_REPR_REXPR_DEF_HPP
+#pragma once
 
 #include "ast.hpp"
 #include "ast_adapted.hpp"
@@ -128,5 +121,3 @@ parser::rexpr_type const& rexpr()
     return parser::rexpr;
 }
 } // namespace rexpr
-
-#endif
