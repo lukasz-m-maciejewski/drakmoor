@@ -59,3 +59,5 @@ add_subdirectory(src/constexpr_all_the_things)
 add_subdirectory(src/x3-rexpr_full)
 add_subdirectory(src/monadic_composition)
 add_subdirectory(src/x3-funexpr-parser)
+
+add_executable(try_dsl src/try_dsl.cpp)
